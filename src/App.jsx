@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import {
   BrowserRouter as Router,
-  Routes ,
+  Routes,
   Route,
   Link,
   NavLink
@@ -31,23 +31,23 @@ function App() {
 
   useEffect(() => {
     fetch(user_api_url)
-    .then(res => res.json())
-    .then(data => setUserData(data))
-    .catch(err => console.log(err))
+      .then(res => res.json())
+      .then(data => setUserData(data))
+      .catch(err => console.log(err))
 
     fetch(rides_api_url)
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(ele => {
-        ele["state"] = ele["state"].toLowerCase()
-        ele["city"] = ele["city"].toLowerCase()
-      });
-      setStationData(data)
-    })
-    .catch(err => console.log(err))
-  },[]);
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(ele => {
+          ele["state"] = ele["state"].toLowerCase()
+          ele["city"] = ele["city"].toLowerCase()
+        });
+        setStationData(data)
+      })
+      .catch(err => console.log(err))
+  }, []);
 
-  if(userData) {
+  if (userData) {
     nearest_rides_props = {
       cur_id: userData.station_code,
       data: stationData,
@@ -57,7 +57,7 @@ function App() {
       img_url: userData.url
     }
   }
-  
+
   const onHandleStateFilter = (data) => {
     setStateFilter(data)
   }
@@ -67,49 +67,53 @@ function App() {
   const toggleFilters = () => {
     setShowFilters(!showFilters)
   }
-  
+
   return (
     <div className="App background">
       <Header data={header_props} />
       <div>
         <Router>
-          <div style={{margin: "2rem 0rem 0rem 2rem"}}>
+          <div style={{ margin: "2rem 0rem 0rem 2rem" }}>
             <div className="menu">
               <ul className="rides_menu">
-                  <li>
-                      <NavLink to="/nearest-rides" style={{color: "white"}}>Nearest Rides</NavLink>
-                  </li>
-                  <li>
-                      <NavLink to="/upcoming-rides" style={{color: "white"}}>Upcoming Rides</NavLink>
-                  </li>
-                  <li>
-                      <NavLink to="/past-rides" style={{color: "white"}}>Past Rides</NavLink>
-                  </li>
+                <li>
+                  <NavLink to="/nearest-rides" style={{ color: "white" }}>Nearest Rides</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/upcoming-rides" style={{ color: "white" }}>Upcoming Rides</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/past-rides" style={{ color: "white" }}>Past Rides</NavLink>
+                </li>
               </ul>
               <div>
-                <img src={filterLogo} alt="filterLogo" style={{margin: "0rem 1.6rem 0rem 0rem"}}></img>
-                <span style={{color: "white", fontSize: "1.6rem"}} onClick={toggleFilters}>Filters</span>
+                <img src={filterLogo} alt="filterLogo" style={{ margin: "0rem 1.6rem 0rem 0rem" }}></img>
+                <span style={{ color: "white", fontSize: "1.6rem" }} onClick={toggleFilters}>Filters</span>
               </div>
             </div>
-              <div className='filters_menu'>
-                {showFilters ? <Filters data={stationData} onHandleStateFilter={onHandleStateFilter} onHandleCityFilter={onHandleCityFilter} /> : ""}
-              </div>
-              <Routes >
-                  <Route path="/" element={<NearestRides {...nearest_rides_props} sFilter={stateFilter} cFilter={cityFilter} />}></Route>
-                  <Route path="/nearest-rides" element={<NearestRides {...nearest_rides_props} sFilter={stateFilter} cFilter={cityFilter} />}></Route>
-              </Routes>
-              <Routes >
-                  <Route path="/upcoming-rides" element={<UpcomingRides data={stationData} sFilter={stateFilter} cFilter={cityFilter}/>}></Route>
-              </Routes>
-              <Routes >
-                  <Route path="/past-rides" element={<PastRides data={stationData} sFilter={stateFilter} cFilter={cityFilter} />}></Route>
-              </Routes>
+            <div className='filters_menu'>
+              {showFilters ? <Filters data={stationData} onHandleStateFilter={onHandleStateFilter} onHandleCityFilter={onHandleCityFilter} /> : ""}
+            </div>
+            <Routes >
+              <Route path="/" element={<NearestRides {...nearest_rides_props} sFilter={stateFilter} cFilter={cityFilter} />}></Route>
+              <Route path="/nearest-rides" element={<NearestRides {...nearest_rides_props} sFilter={stateFilter} cFilter={cityFilter} />}></Route>
+            </Routes>
+            <Routes >
+              <Route path="/upcoming-rides" element={<UpcomingRides data={stationData} sFilter={stateFilter} cFilter={cityFilter} />}></Route>
+            </Routes>
+            <Routes >
+              <Route path="/past-rides" element={<PastRides data={stationData} sFilter={stateFilter} cFilter={cityFilter} />}></Route>
+            </Routes>
           </div>
         </Router>
       </div>
-      
+
     </div>
   );
 }
 
 export default App;
+
+
+
+// Hello
